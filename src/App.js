@@ -44,18 +44,15 @@ class App extends Component {
         this.setState({ icon: this.weatherIcon.Thundestorm });
         break;
       case rangeId >= 300 && rangeId <= 321:
-        this.setState({ icon: this.weatherIcon.Thundestorm });
-        break;
-      case rangeId >= 500 && rangeId <= 531:
         this.setState({ icon: this.weatherIcon.Drizzle });
         break;
-      case rangeId >= 600 && rangeId <= 622:
+      case rangeId >= 500 && rangeId <= 531:
         this.setState({ icon: this.weatherIcon.Rain });
         break;
-      case rangeId >= 701 && rangeId <= 781:
+      case rangeId >= 600 && rangeId <= 622:
         this.setState({ icon: this.weatherIcon.Snow });
         break;
-      case rangeId >= 200 && rangeId <= 232:
+      case rangeId >= 701 && rangeId <= 781:
         this.setState({ icon: this.weatherIcon.Atmosphere });
         break;
       case rangeId === 800:
@@ -79,13 +76,13 @@ class App extends Component {
         `http://api.openweathermap.org/data/2.5/weather?q=${city},${country}&appid=${API_key}`
       );
       const response = await api_call.json();
-      console.log(response);
       this.setState({
         city: `${response.name}, ${response.sys.country}`,
         celsius: this.calCelsius(response.main.temp),
         temp_max: this.calCelsius(response.main.temp_max),
         temp_min: this.calCelsius(response.main.temp_min),
         description: response.weather[0].description,
+        error: false,
       });
 
       this.getWeatherIcon(this.weatherIcon, response.weather[0].id);
@@ -97,7 +94,7 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <Form loadweather={this.getWeather} error="{this.state.error}" />
+        <Form loadweather={this.getWeather} error={this.state.error} />
         <Weather
           city={this.state.city}
           country={this.state.country}
