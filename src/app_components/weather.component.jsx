@@ -1,29 +1,39 @@
 import React from "react";
 
-const Weather = () => {
+const Weather = ({
+  city,
+  country,
+  temp_celsius,
+  temp_min,
+  temp_max,
+  description,
+  weatherIcon,
+}) => {
   return (
-    <div className="container">
-      <div className="cards">
-        <h1>London</h1>
+    <div className="container text-light">
+      <div className="cards pt-4">
+        <h1>{city}</h1>
         <h5 className="py-4">
-          <i className="wi wi-day-sunny display-1"></i>
+          <i className={`wi ${weatherIcon} display-1`}></i>
         </h5>
-        <h1 className="py-2">25&deg;</h1>
-        {minmaxtemp(24, 19)}
+        {temp_celsius ? <h1 className="py-2">{temp_celsius}&deg;</h1> : null}
+        {minmaxtemp(temp_min, temp_max)}
 
-        <h4 className="py-3">Slow Rain</h4>
+        <h4 className="py-3">{description}</h4>
       </div>
     </div>
   );
 };
 
 function minmaxtemp(min, max) {
-  return (
-    <h3>
-      <span className="px-4">{min}&deg;</span>;
-      <span className="px-4">{min}&deg;</span>;
-    </h3>
-  );
+  if (min && max) {
+    return (
+      <h3>
+        <span className="px-4">{min}&deg;</span>
+        <span className="px-4">{max}&deg;</span>
+      </h3>
+    );
+  }
 }
 
 export default Weather;
